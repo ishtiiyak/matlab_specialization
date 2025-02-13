@@ -1,0 +1,13 @@
+x=-2*pi:pi/10:2*pi;
+y=x.^2;
+z=sin(x);
+y1=cos(x);
+z1=exp(x);
+subplot(2,2,1),plot(x,y)
+grid
+subplot(2,2,2),plot(x,z)
+grid
+subplot(2,2,3),plot(x,y1)
+grid
+subplot(2,2,4),plot(x,z1)
+grid
