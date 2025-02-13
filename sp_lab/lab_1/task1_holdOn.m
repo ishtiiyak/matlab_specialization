@@ -1,0 +1,15 @@
+ t = linspace(0, 2 * pi, 100);
+            y1 = sin(t);
+            y2 = t;
+            y3 = t - (t.^3)/6 + (t.^5)/120 - (t.^7)/5040;
+            hold on;
+            plot(t, y1);
+            plot(t, y2, '-');
+            plot(t, y3, '--');
+            hold off;
+            axis([0 5 -1 5]);
+            xlabel('t');
+            ylabel('sin(t) approximation');
+            title('sin(t) function');
+            legend('y1', 'y2', 'y3');
+            grid on;
