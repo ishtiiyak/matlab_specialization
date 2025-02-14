@@ -1,45 +1,44 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% plot_energy_power
-%              x(t) = (4*exp(-3t) - 3*exp(-4t)) * u(t).
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+y = @(t) (t >= 0).*(4*exp(-3*t) - 3*exp(-4*t));  
 
-clear; clc; close all;
+N = 0.1;
+dt = 0.01;
+P = zeros(1, 1000);
+E = zeros(1, 1000);
 
-u = @(t) (t >= 0);
-
-
-x = @(t) (4*exp(-3*t) - 3*exp(-4*t)) .* u(t);
-
-
-x_sq = @(t) (x(t)).^2;
-
-
-maxT = 10;                 
-NT   = 100;
-Tvals = linspace(0.1, maxT, NT);   
-
-Evals = zeros(size(Tvals)); 
-Pvals = zeros(size(Tvals));  
-
-for i = 1:length(Tvals)
-    T_i = Tvals(i);
- 
-    Evals(i) = integral(x_sq, 0, T_i);
-    
-
-    Pvals(i) = Evals(i) / (2 * T_i);
+for i = 1:1000
+    t = 0:dt:N;
+    signal_values = y(t);
+    squared_magnitude = abs(signal_values).^2;
+    P(i) = trapz(t, squared_magnitude)/N; 
+    E(i) = trapz(t, squared_magnitude);    
+    N = N + 0.1;  
 end
 
 
-figure('Name','Energy and Power for x(t) = (4e^{-3t}-3e^{-4t})u(t)');
+mean_power = mean(P);
+mean_energy = mean(E);
+
+i = 1:1000;
+
+
+figure;
+
+
 subplot(2,1,1);
-plot(Tvals, Evals, 'b-o','LineWidth',1.5);
-xlabel('T'); ylabel('E(T)');
-title('Running Energy E(T)');
+plot(i, P, 'r');
+xlabel('N (Time Interval)');
+ylabel('Power');
+title('Signal Power vs Time Interval');
 grid on;
 
+
 subplot(2,1,2);
-plot(Tvals, Pvals, 'r-o','LineWidth',1.5);
-xlabel('T'); ylabel('P(T)');
-title('Running Average Power P(T) = E(T)/(2T)');
+plot(i, E, 'go' );
+xlabel('N (Time Interval)');
+ylabel('Energy');
+title('Signal Energy vs Time Interval');
 grid on;
+
+
+disp(['Mean Power: ', num2str(mean_power)]);
+disp(['Mean Energy: ', num2str(mean_energy)]);
