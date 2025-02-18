@@ -4,3 +4,9 @@
 function area =tri_area(base,height)
 area=.5*(base*height);
 end
+
+% Test the tri_area function
+base = 5;
+height = 4;
+result = tri_area(base, height);
+fprintf('Area of triangle with base %.1f and height %.1f is %.1f\n', base, height, result);
